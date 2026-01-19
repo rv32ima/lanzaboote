@@ -24,7 +24,7 @@ let
   mkInstallCommand = efiSysMountPoint: ''
     ${cfg.installCommand} \
       ${efiSysMountPoint} \
-      /nix/var/nix/profiles/system-*-link
+      ${cfg.profileGlob}
   '';
 in
 {
@@ -48,6 +48,14 @@ in
 
         `null` means no limit i.e. all generations
         that were not garbage collected yet.
+      '';
+    };
+
+    profileGlob = lib.mkOption {
+      default = "/nix/var/nix/profiles/system-*-link";
+      type = lib.types.str;
+      description = ''
+        The glob expression that Lanzaboote should use for finding profile generations.
       '';
     };
 
